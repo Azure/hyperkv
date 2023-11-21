@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: read
+
+jobs:
+  build-cloud-controller-manager:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - os: linux
+            arch: amd64
+          - os: linux
+            arch: arm
+          - os: linux
+            arch: arm64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1 # v4.1.1
+      - name: Setup Golang
+        uses: actions/setup-go@v4.1.0 # v4.1.0
+        with:
+          go-version-file: go.mod
+      - name: Build binary
+        run: |
+          rm -rf ./bin
+          ARCH=${{ matrix.arch }} make build
+          mv bin/hyperkv bin/hyperkv-${{ matrix.os }}-${{ matrix.arch }}
+      - uses: actions/upload-artifact@v3.1.3 # v3.1.3
+        with:
+          name: hyperkv-${{ matrix.os }}-${{ matrix.arch }}
+          path: bin/azure-hyperkv-${{ matrix.os }}-${{ matrix.arch }}
+          if-no-files-found: error
