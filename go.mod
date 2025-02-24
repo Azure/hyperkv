@@ -1,6 +1,6 @@
 module github.com/Azure/hyperkv
 
-go 1.20
+go 1.23
 
 require github.com/spf13/cobra v1.9.1
 
