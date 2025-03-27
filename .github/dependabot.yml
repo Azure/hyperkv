@@ -20,6 +20,8 @@ updates:
         - "major"
   - package-ecosystem: "github-actions"
     directory: "/"
+    schedule:
+      interval: "daily"
     groups:
       all:
         applies-to: version-updates
