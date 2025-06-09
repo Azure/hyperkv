@@ -1,8 +1,8 @@
 # Project hyperkv
 
-Parse Hyper-V Key Value Pairs on Linux Guest
+Parse Hyper-V key value pairs on Linux guest vm
 
-This is a simple library to parse Hyper-V Key Value Pairs on Linux Guest. 
+This is a simple library to parse Hyper-V key value pairs on Linux guest vm. 
 
 All of kv files are located in `/var/lib/hyperv/` directory and maintained by `hv_kvp_daemon`.
 `hv_kvp_daemon` is a daemon that runs on Linux guest and communicates with Hyper-V host to exchange data.
