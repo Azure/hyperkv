@@ -79,7 +79,7 @@ var hyperkvAct = [...]int8{
 }
 
 var hyperkvPact = [...]int16{
-	-4, -1000, -1000, -4, -1, -1000, -3, -2, -1000,
+	-4, -32768, -32768, -4, -1, -32768, -3, -2, -32768,
 }
 
 var hyperkvPgo = [...]int8{
@@ -95,7 +95,7 @@ var hyperkvR2 = [...]int8{
 }
 
 var hyperkvChk = [...]int16{
-	-1000, -2, 6, -1, 4, -2, 5, 4, 5,
+	-32768, -2, 6, -1, 4, -2, 5, 4, 5,
 }
 
 var hyperkvDef = [...]int8{
@@ -153,7 +153,7 @@ func hyperkvNewParser() hyperkvParser {
 	return &hyperkvParserImpl{}
 }
 
-const hyperkvFlag = -1000
+const hyperkvFlag = -32768
 
 func hyperkvTokname(c int) string {
 	if c >= 1 && c-1 < len(hyperkvToknames) {
