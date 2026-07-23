@@ -1,9 +1,11 @@
-name: CI Build
+name: CI
 
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
+    tags:
+      - "v*.*.*"
   pull_request:
     branches: [ main ]
 
@@ -24,3 +26,34 @@ jobs:
         run: make build
       - name: Test
         run: go test ./...
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - os: linux
+            arch: amd64
+          - os: linux
+            arch: arm
+          - os: linux
+            arch: arm64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+      - name: Setup Golang
+        uses: actions/setup-go@v7.0.0
+        with:
+          go-version-file: go.mod
+      - name: Build binary
+        run: |
+          rm -rf ./bin
+          ARCH=${{ matrix.arch }} make build
+          mv bin/hyperkv bin/hyperkv-${{ matrix.os }}-${{ matrix.arch }}
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: hyperkv-${{ matrix.os }}-${{ matrix.arch }}
+          path: bin/hyperkv-${{ matrix.os }}-${{ matrix.arch }}
+          if-no-files-found: error
