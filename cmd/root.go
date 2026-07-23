@@ -62,7 +62,7 @@ var (
 )
 
 func Run(cmd *cobra.Command, args []string) {
-	content, err := os.ReadFile(filePath)
+	content, err := readFile(filePath)
 	if err != nil {
 		fmt.Printf("Error reading file %s: %v", filePath, err)
 	}
