@@ -36,5 +36,5 @@ jobs:
       - uses: actions/upload-artifact@v7.0.1
         with:
           name: hyperkv-${{ matrix.os }}-${{ matrix.arch }}
-          path: bin/azure-hyperkv-${{ matrix.os }}-${{ matrix.arch }}
+          path: bin/hyperkv-${{ matrix.os }}-${{ matrix.arch }}
           if-no-files-found: error
