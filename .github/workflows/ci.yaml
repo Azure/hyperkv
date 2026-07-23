@@ -57,3 +57,21 @@ jobs:
           name: hyperkv-${{ matrix.os }}-${{ matrix.arch }}
           path: bin/hyperkv-${{ matrix.os }}-${{ matrix.arch }}
           if-no-files-found: error
+
+  publish:
+    needs: release
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download binaries
+        uses: actions/download-artifact@v7.0.1
+        with:
+          pattern: hyperkv-*
+          path: bin
+          merge-multiple: true
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: bin/hyperkv-*
