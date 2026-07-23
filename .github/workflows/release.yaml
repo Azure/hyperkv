@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  build-cloud-controller-manager:
+  build-binaries:
     runs-on: ubuntu-latest
     strategy:
       matrix:
