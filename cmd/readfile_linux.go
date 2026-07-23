@@ -17,7 +17,9 @@ func readFile(path string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer f.Close()
+	defer func() {
+		_ = f.Close()
+	}()
 
 	if err := syscall.Flock(int(f.Fd()), syscall.LOCK_SH); err != nil {
 		return nil, err

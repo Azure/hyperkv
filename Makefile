@@ -76,10 +76,11 @@ ${COBRA_CLI}: $(LOCALBIN)
 	test -s $(LOCALBIN)/cobra-cli || GOBIN=$(LOCALBIN) go install github.com/spf13/cobra-cli@latest
 
 GOLANGCI_LINT ?= $(LOCALBIN)/golangci-lint
+GOLANGCI_LINT_VERSION ?= v2.12.2
 .PHONY: golangci-lint 
 golangci-lint: $(GOLANGCI_LINT) ## Download golangci-lint locally if necessary.
 $(GOLANGCI_LINT): $(LOCALBIN)
-	test -s $(LOCALBIN)/golangci-lint || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(LOCALBIN) latest
+	test -s $(LOCALBIN)/golangci-lint || GOBIN=$(LOCALBIN) go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION)
 
 GOYACC ?= $(LOCALBIN)/goyacc
 .PHONY: goyacc
