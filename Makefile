@@ -46,7 +46,7 @@ vet: golangci-lint ## Run go vet against code.
 
 .PHONY: generate
 generate: goyacc ## Generate code.
-	goyacc -p hyperkv -o parser.go -v bin/hyperkv.out kvp.y 
+	$(GOYACC) -p hyperkv -o parser.go -v bin/hyperkv.out kvp.y 
 
 .PHONY: build
 build: $(LOCALBIN) generate fmt vet ## Build manager binary.
@@ -69,7 +69,7 @@ goimports: $(GOIMPORTS) ## Download goimports locally if necessary.
 $(GOIMPORTS): $(LOCALBIN)
 	test -s $(LOCALBIN)/goimports || GOBIN=$(LOCALBIN) go install golang.org/x/tools/cmd/goimports@latest
 
-COBRA_CLI ?=$(LOCALBIN)/cobra-CLI
+COBRA_CLI ?=$(LOCALBIN)/cobra-cli
 .PHONY: cobra-cli 
 cobra-cli: $(COBRA_CLI) ## Download cobra cli locally if necessary.
 ${COBRA_CLI}: $(LOCALBIN)
