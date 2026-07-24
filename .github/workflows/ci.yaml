@@ -17,9 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Setup Golang
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
       - name: Build
@@ -42,9 +42,9 @@ jobs:
             arch: arm64
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Setup Golang
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
       - name: Build binary
@@ -52,7 +52,7 @@ jobs:
           rm -rf ./bin
           ARCH=${{ matrix.arch }} make build
           mv bin/hyperkv bin/hyperkv-${{ matrix.os }}-${{ matrix.arch }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: hyperkv-${{ matrix.os }}-${{ matrix.arch }}
           path: bin/hyperkv-${{ matrix.os }}-${{ matrix.arch }}
@@ -66,7 +66,7 @@ jobs:
       contents: write
     steps:
       - name: Download binaries
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: hyperkv-*
           path: bin
